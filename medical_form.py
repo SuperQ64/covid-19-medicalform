@@ -7,9 +7,9 @@ from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-fontname_g = "yumin"
+fontname_g = "ipaexm"
 default_font_size = 14
-font_path = "./font/yumin.ttf"
+font_path = "./font/ipaexm.ttf"
 json_file = sys.argv[1]
 file_in = "./resource/medical_form_original.pdf"
 file_out = sys.argv[2]
@@ -28,8 +28,8 @@ def write_checkmark(x,y,answer):
 def write_q1():
     answer = form_info['q1']
     if answer[0] == 'false':
-        cc.drawString(223,616,answer[1])
-        cc.drawString(260,616,answer[2])
+        cc.drawString(221,616,answer[1])
+        cc.drawString(258,616,answer[2])
         cc.drawString(340,616,answer[3])
         cc.drawString(375,616,answer[4])
 
