@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3633cb2dbcad9f59b139bd39cc988502dc387b1fa82aba954c4d911b44ec8d1f"
+            "sha256": "f5e281d89b118e58e51db945f9d598e7e25735ecc1d4706f1d16dd269546a4de"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -28,6 +28,14 @@
             ],
             "index": "pypi",
             "version": "==0.1.10"
+        },
+        "pdfrw": {
+            "hashes": [
+                "sha256:0dc0494a0e6561b268542b28ede2280387c2728114f117d3bb5d8e4787b93ef4",
+                "sha256:758289edaa3b672e9a1a67504be73c18ec668d4e5b9d5ac9cbc0dc753d8d196b"
+            ],
+            "index": "pypi",
+            "version": "==0.4"
         },
         "pillow": {
             "hashes": [
