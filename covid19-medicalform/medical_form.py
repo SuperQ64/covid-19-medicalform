@@ -7,13 +7,10 @@ from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
+cc = canvas.Canvas("./out/added_medical_form.pdf")
 fontname_g = "ipaexm"
 default_font_size = 14
-font_path = "./font/ipaexm.ttf"
-json_file = sys.argv[1]
-file_in = "./resource/medical_form_original.pdf"
-file_out = sys.argv[2]
-cc = canvas.Canvas(file_out)
+form_info = {}
 
 def write_yes_no(x,y,answer):
     if answer == 'true':
@@ -127,67 +124,79 @@ def test_method():
         x = x + 100
         y = y + 100
 
+def write(info,file_out):
+    font_path = "./font/ipaexm.ttf"
+    file_in = "./resource/medical_form_original.pdf"
+    global cc
+    cc = canvas.Canvas(file_out)
+    global form_info
+    form_info = info
 
-sys.stderr.write ("*** 開始 ***\n")
+    pdfmetrics.registerFont(TTFont(fontname_g,font_path))
+    cc.setFont(fontname_g,default_font_size)
 
-with open(json_file,"r",encoding="utf-8") as f:
-    form_info = json.load(f)    # 予診票に書き込む情報を読み込む
+    page = PdfReader(file_in,decompress=False).pages
+    pp = pagexobj(page[0])
+    cc.doForm(makerl(cc, pp))
 
-pdfmetrics.registerFont(TTFont(fontname_g,font_path))
-cc.setFont(fontname_g,default_font_size)
+    print(form_info['q1'])
 
-page = PdfReader(file_in,decompress=False).pages
-pp = pagexobj(page[0])
-cc.doForm(makerl(cc, pp))
+    if int(form_info['age']) < 100:
+        form_info['age'] = '0' + form_info['age']
 
-if int(form_info['age']) < 100:
-    form_info['age'] = '0' + form_info['age']
+    phone = form_info['phone'].split("-")
 
-phone = form_info['phone'].split("-")
+    # 予診票に書き込み
+    cc.drawString(127,755,form_info['prefecture'])
+    cc.drawString(220,755,form_info['city'])
+    cc.drawString(60,728,form_info['address'])
+    if len(form_info['name']) <= 10:
+        cc.drawString(60,690,form_info['name'])
+    else:
+        write_name(60,690,form_info['name'])
+    cc.drawString(273,705,phone[0])
+    cc.drawString(273,690,phone[1])
+    cc.drawString(330,690,phone[2])
+    write_number(67,665,form_info['year'])
+    write_number(145,665,form_info['month'])
+    write_number(188,665,form_info['day'])
+    write_number(263,665,form_info['age'])
+    write_number(485,665,form_info['temperature'])
 
-# 予診票に書き込み
-cc.drawString(127,755,form_info['prefecture'])
-cc.drawString(220,755,form_info['city'])
-cc.drawString(60,728,form_info['address'])
-if len(form_info['name']) <= 10:
-    cc.drawString(60,690,form_info['name'])
-else:
-    write_name(60,690,form_info['name'])
-cc.drawString(273,705,phone[0])
-cc.drawString(273,690,phone[1])
-cc.drawString(330,690,phone[2])
-write_number(67,665,form_info['year'])
-write_number(145,665,form_info['month'])
-write_number(188,665,form_info['day'])
-write_number(263,665,form_info['age'])
-write_number(485,665,form_info['temperature'])
+    cc.setFont(fontname_g,12)
+    cc.drawString(65,710,form_info['furigana'])
+    if form_info['sex'] == '男':
+        cc.drawString(338,669,'✓')
+    else:
+        cc.drawString(373,669,'✓')
+    write_q1()
+    write_yes_no(442,600,form_info['q2'])
+    write_yes_no(442,580,form_info['q3'])
+    write_q4()
+    write_q5()
+    write_q6()
+    write_q7()
+    write_yes_no(442,402,form_info['q8'])
+    write_q9()
+    write_q10()
+    write_yes_no(442,325,form_info['q11'])
+    write_q12()
+    write_yes_no(442,285,form_info['q13'])
 
-cc.setFont(fontname_g,12)
-cc.drawString(65,710,form_info['furigana'])
-if form_info['sex'] == '男':
-    cc.drawString(338,669,'✓')
-else:
-    cc.drawString(373,669,'✓')
-write_q1()
-write_yes_no(442,600,form_info['q2'])
-write_yes_no(442,580,form_info['q3'])
-write_q4()
-write_q5()
-write_q6()
-write_q7()
-write_yes_no(442,402,form_info['q8'])
-write_q9()
-write_q10()
-write_yes_no(442,325,form_info['q11'])
-write_q12()
-write_yes_no(442,285,form_info['q13'])
+    if form_info['agreement'] == 'true':
+        cc.drawString(377,186,'✓')
+    else:
+        cc.drawString(466,186,'✓')
 
-if form_info['agreement'] == 'true':
-    cc.drawString(377,186,'✓')
-else:
-    cc.drawString(466,186,'✓')
+    cc.showPage()
+    cc.save()
 
-cc.showPage()
-cc.save()
+if __name__ == '__main__':
+    json_file = sys.argv[1] #json
+    file_out = sys.argv[2]  #出力pdfパス
+    
+    with open(json_file,"r",encoding="utf-8") as f:
+        # 予診票に書き込む情報を読み込む
+        form_info = json.load(f)
 
-sys.stderr.write ("*** 終了 ***\n")
+    write(form_info,file_out)
