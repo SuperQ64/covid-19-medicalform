@@ -4,12 +4,12 @@ import medical_form_print as mfp
 
 def main():
     while True:
-        print('please input QRcode')
+        print('QRコードをかざしてください')
         url = input()   #https://****/{接種券番号}
         url.replace('+',':')
         div_url = url.split('/')
         id = div_url[len(div_url) - 1]
-        file_out = './out/' + id + '.pdf'
+        file_name = id + '.pdf'
 
         if id == 'end':
             break
@@ -19,14 +19,10 @@ def main():
             json_file = json.load(f)
 
         info = json_file[id]
-
-
-        mf.write(info=info,file_out=file_out)
-
-        mfp.print(print_file=file_out)
-
+        mf.write(info=info,file_out='./out/' + file_name)
+        mfp.run_print(file_name=file_name)
     
-    print('entered [end]')
+    print('終了します')
 
 if __name__ == '__main__':
     main()

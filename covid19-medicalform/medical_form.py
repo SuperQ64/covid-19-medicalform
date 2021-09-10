@@ -139,8 +139,6 @@ def write(info,file_out):
     pp = pagexobj(page[0])
     cc.doForm(makerl(cc, pp))
 
-    print(form_info['q1'])
-
     if int(form_info['age']) < 100:
         form_info['age'] = '0' + form_info['age']
 
