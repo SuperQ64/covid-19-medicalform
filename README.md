@@ -1,6 +1,24 @@
-# usage
-### python ./medical_form.py ./resource/{json_file} ./out/{output_pdf_file}  
+# 使う前の準備
+## **Windows**
+resource/property.jsonに使用するプリンターの名前、プリンターのドライバの名前、ポート名をそれぞれprinter,driver,portの項目に書いてください。   
+Adobe Acrobat Reader DCのインストールをしてください。
+```json
+{
+    "printer" : "プリンター名",
+    "driver" : "ドライバ名",
+    "port" : "ポート名"
+}
 
-# example  
-### python ./medical_form.py ./resource/template.json ./out/added_medical_form.pdf
+```
+
+---
+
+## **Linux**
+CUPSでプリンタを登録したらデフォルトで使うプリンタとして設定を行えばそれで終了です。
+
+---
+
+
+
+
 
