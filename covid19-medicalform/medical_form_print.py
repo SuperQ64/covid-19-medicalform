@@ -16,7 +16,7 @@ def run_print(file_name):
         subprocess.run(['taskkill' , '/F' , '/IM' , 'AcroRd32.exe'])
     elif os_name == 'Linux':
         file_path = './download/' + file_name
-        subprocess.run(['lpr' , file_path] , shell=True)
+        subprocess.run('lpr ' + file_path , shell=True)
 
 def test_run_print(file_name):
     os_name = platform.system()
@@ -29,7 +29,7 @@ def test_run_print(file_name):
         subprocess.run(['taskkill' , '/F' , '/IM' , 'AcroRd32.exe'])
     elif os_name == 'Linux':
         file_path = './out/' + file_name
-        subprocess.run(['lpr' , file_path] , shell=True)
+        subprocess.run('lpr ' + file_path , shell=True)
 
 
 if __name__ == '__main__':
