@@ -2,7 +2,7 @@ import sys
 import platform
 
 def qr_read():
-    print('QRコードをかざしてください')
+    print('QRコードをかざしてください。(endと入力すると終了します。)')
     url = input()
     if url == 'end':
         print('プログラムを終了します')

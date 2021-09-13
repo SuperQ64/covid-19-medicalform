@@ -9,8 +9,17 @@ def main():
     while True:
         qr_string = qr.qr_read()
         file_name = ''
-        fd.file_download(url=qr_string,save_name=file_name)
+        success = fd.file_download(url=qr_string,save_name=file_name)
+        if not success:
+            again()
         mfp.run_print(file_name=file_name)
+
+def again():
+    qr_string = qr.qr_read()
+    file_name = ''
+    success = fd.file_download(url=qr_string,save_name=file_name)
+    if not success:
+        again()
 
 def test():
     while True:
