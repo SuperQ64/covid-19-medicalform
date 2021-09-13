@@ -25,6 +25,7 @@ def replace_url(url):
 
     return fixed_url
 
+
 if __name__ == '__main__':
     request_url = qr_read()
     print(request_url)
