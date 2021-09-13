@@ -1,7 +1,7 @@
 # 使う前の準備
 ## **Windows**
 resource/property.jsonに使用するプリンターの名前、プリンターのドライバの名前、ポート名をそれぞれprinter,driver,portの項目に書いてください。   
-Adobe Acrobat Reader DCのインストールをしてください。  
+Adobe Acrobat Reader DCをインストールしてください。  
 `property.json`
 ```json
 {
@@ -13,6 +13,7 @@ Adobe Acrobat Reader DCのインストールをしてください。
 ```
 
 ## **Linux**
+OS:Ubuntu20.04-desktopで動作確認  
 CUPSでプリンタを登録し、デフォルトで使うプリンタとして設定を行えばそれで終了です。
 
 
